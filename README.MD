@@ -1,2 +1,2 @@
-#Simple script to use BERT for question answering for longer texts
+# Simple script to use BERT for question answering for longer texts
 BERT is only able to handle questions of <250 tokens so the script slits a longer text into smaller parts and does prediction on each part and gives you the most probable answer.
