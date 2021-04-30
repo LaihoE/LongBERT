@@ -65,7 +65,7 @@ def ask_question(longtext_file_path,question,early_stop_conf,words_per_split=200
         # What we use to choose the best batch (The batch that has the highest confidence on first word)
         print(f"{inx}   {round(torch.max(start_scores).item(),4)}   {answer}")
 
-        # Early exit (if the model is confident enough it wont continue, change this with early_stop_conf)
+        # Early exit (if the model is confident enough it won't continue, change this with early_stop_conf)
         thismax=torch.max(start_scores)
         if thismax.item() >early_stop_conf:
             print("")
@@ -73,20 +73,20 @@ def ask_question(longtext_file_path,question,early_stop_conf,words_per_split=200
             print(inx, "Confidence:", thismax.item(), "   ANSWER:", answer)
             exit()
         # If this batch was more confident than the earlier best batch, but not confident enough for early exit
-        if thismax.item() > currentmax[0]:
+
+        if thismax.item() > float(currentmax[1]):
             currentmax = (inx, thismax.item(), answer)
     return currentmax
 
 
 
 longtext_file_path = 'longtext.txt'
-question = 'when was the winter war?'
-early_stop_conf = 8       # How confident do you want the model to be to quit early (roughly 1-10 scale where >8 correct most of time)
+question = 'how much money did the movie make?'
+early_stop_conf = 7.2       # How confident do you want the model to be to quit early (roughly 1-10 scale where >8 correct most of time)
 words_per_split = 150     # How many words per batch, BERT can only handle 250 tokens so on average around 200 words
-
 
 ans=ask_question(longtext_file_path,question,early_stop_conf,words_per_split)
 print("")
 print("index (batch):",ans[0])
-print("Confidence",round(int(ans[1],2)))
-print("answer:",ans[2])
+print("Confidence",round(float(ans[1]),2))
+print("Answer:",ans[2])
